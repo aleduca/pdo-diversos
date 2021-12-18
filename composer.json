@@ -1,0 +1,12 @@
+{
+    "name": "alexandrecardoso/php",
+    "require": {
+        "symfony/var-dumper": "^6.0",
+        "ext-pdo": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "app\\": "app/"
+        }
+    }
+}
