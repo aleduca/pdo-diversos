@@ -2,8 +2,7 @@
 
 namespace app\database;
 
-use app\services\Logger;
-use app\services\LogTXT;
+use app\services\DumpSQL;
 use Exception;
 use PDO;
 
@@ -51,12 +50,14 @@ final class Connection
         self::$conn = null;
     }
 
-    public static function rollback(Exception $e)
+    public static function rollback($e)
     {
         if (self::$isTransaction) {
             self::$conn->rollback();
         }
 
         print $e->getMessage();
+
+        DumpSQL::get();
     }
 }
