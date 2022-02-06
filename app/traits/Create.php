@@ -3,7 +3,7 @@ namespace app\traits;
 
 trait Create
 {
-    public function create()
+    public function create(): string
     {
         return 'create'   ;
     }

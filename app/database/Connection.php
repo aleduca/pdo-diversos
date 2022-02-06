@@ -3,7 +3,6 @@
 namespace app\database;
 
 use app\services\DumpSQL;
-use Exception;
 use PDO;
 
 final class Connection

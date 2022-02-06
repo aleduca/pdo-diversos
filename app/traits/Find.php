@@ -2,6 +2,7 @@
 namespace app\traits;
 
 use app\database\Connection;
+use PDO;
 
 trait Find
 {
