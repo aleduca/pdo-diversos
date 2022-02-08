@@ -7,13 +7,16 @@ use app\database\Filters;
 use app\database\models\User;
 use app\database\Pagination;
 use app\services\DumpSQL;
+use League\Plates\Engine;
 
 try {
     Connection::open();
 
+
     $filters = new Filters;
-    $filters->where("id", ">", 150);
-    $filters->orderBy("id", 'desc');
+    $filters->join('posts', 'users.id', '=', 'posts.userId', 'left join');
+    $filters->where("users.id", ">", 150);
+    // $filters->orderBy("id", 'desc');
 
 
     $pagination = new Pagination;
@@ -28,23 +31,17 @@ try {
     $user = new User;
     $user->setPagination($pagination);
     $user->setFilters($filters);
-    $user->setFields('id,firstName,lastName');
+    $user->setFields('users.id,firstName,lastName, title');
     $usersFound = $user->all();
-
-    // DumpSQL::get();
 
     dd($usersFound);
 
-    // $user->delete(169);
-    // $user->create([
-    //     'firstName' => 'Alexandre',
-    //     'lastName' => 'Cardoso',
-    //     'email' => 'email@email.com.br',
-    //     'password' => password_hash('123', PASSWORD_DEFAULT),
-    // ]);
-
-    DumpSQL::get();
+    // DumpSQL::get();
     Connection::close();
+
+    $templates = new Engine('../app/views');
+
+    echo $templates->render('home', ['users' => $usersFound,'links' => $pagination->links()]);
 } catch (\Throwable $e) {
     //throw $th;
     Connection::rollback($e);

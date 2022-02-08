@@ -33,9 +33,15 @@ class Filters
         $this->filters['order'] = " order by {$field} {$order}";
     }
 
+    public function join(string $foreignTable, string $joinTable1, string $operator, string $joinTable2, string $joinType = 'inner join')
+    {
+        $this->filters['join'][] = "{$joinType} {$foreignTable} on {$joinTable1} {$operator} {$joinTable2}";
+    }
+
     public function dump()
     {
-        $query = "where ".implode(" ", $this->filters['where']);
+        $query = !empty($this->filters['join']) ? implode(" ", $this->filters['join']) : '';
+        $query.= !empty($this->filters['where']) ? " where ".implode(" ", $this->filters['where']) : '';
         $query.= $this->filters['order'] ?? '';
         $query.= $this->filters['limit'] ?? '';
 

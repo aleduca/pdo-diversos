@@ -53,4 +53,38 @@ class Pagination
     {
         return $this->calculations();
     }
+
+    public function links()
+    {
+        $links = '<ul class="pagination">';
+
+
+        if ($this->currentPage > 1) {
+            $previous = $this->currentPage - 1;
+            $linkPage = http_build_query(array_merge($_GET, [$this->pageIndentifier => $previous]));
+            $first = http_build_query(array_merge($_GET, [$this->pageIndentifier => 1]));
+            $links.="<li class='page-item'><a href='?{$first}' class='page-link'>Primeira</a>";
+            $links.="<li class='page-item'><a href='?{$linkPage}' class='page-link'>Anterior</a>";
+        }
+
+        for ($i=$this->currentPage - $this->linksPerPage;$i <= $this->currentPage + $this->linksPerPage;$i++) {
+            if ($i > 0 && $i <= $this->totalPages) {
+                $class = $this->currentPage === $i ? 'active' : '';
+                $linkPage = http_build_query(array_merge($_GET, [$this->pageIndentifier => $i]));
+                $links.="<li class='page-item {$class}'><a href='?{$linkPage}' class='page-link'>{$i}</a></li>";
+            }
+        }
+
+        if ($this->currentPage < $this->totalPages) {
+            $next = $this->currentPage + 1;
+            $linkPage = http_build_query(array_merge($_GET, [$this->pageIndentifier => $next]));
+            $last = http_build_query(array_merge($_GET, [$this->pageIndentifier => $this->totalPages]));
+            $links.="<li class='page-item'><a href='?{$linkPage}' class='page-link'>Próxima</a>";
+            $links.="<li class='page-item'><a href='?{$last}' class='page-link'>Última</a>";
+        }
+
+        $links.="</ul>";
+
+        return $links;
+    }
 }
