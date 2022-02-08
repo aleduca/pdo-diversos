@@ -63,8 +63,8 @@ class Pagination
             $previous = $this->currentPage - 1;
             $linkPage = http_build_query(array_merge($_GET, [$this->pageIndentifier => $previous]));
             $first = http_build_query(array_merge($_GET, [$this->pageIndentifier => 1]));
-            $links.="<li class='page-item'><a href='?{$first}' class='page-link'>Primeira</a>";
-            $links.="<li class='page-item'><a href='?{$linkPage}' class='page-link'>Anterior</a>";
+            $links.="<li class='page-item'><a href='?{$first}' class='page-link'>Primeira</a></li>";
+            $links.="<li class='page-item'><a href='?{$linkPage}' class='page-link'>Anterior</a></li>";
         }
 
         for ($i=$this->currentPage - $this->linksPerPage;$i <= $this->currentPage + $this->linksPerPage;$i++) {
@@ -79,8 +79,8 @@ class Pagination
             $next = $this->currentPage + 1;
             $linkPage = http_build_query(array_merge($_GET, [$this->pageIndentifier => $next]));
             $last = http_build_query(array_merge($_GET, [$this->pageIndentifier => $this->totalPages]));
-            $links.="<li class='page-item'><a href='?{$linkPage}' class='page-link'>Próxima</a>";
-            $links.="<li class='page-item'><a href='?{$last}' class='page-link'>Última</a>";
+            $links.="<li class='page-item'><a href='?{$linkPage}' class='page-link'>Próxima</a></li>";
+            $links.="<li class='page-item'><a href='?{$last}' class='page-link'>Última</a></li>";
         }
 
         $links.="</ul>";
